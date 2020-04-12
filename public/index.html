@@ -25,6 +25,29 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <!--Bootstrap Css-->
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+
+        <!-- Materialdesign icons Css -->
+        <link rel="stylesheet" href="css/materialdesignicons.min.css">
+
+        <!-- Mobirise icons Css -->
+        <link rel="stylesheet" href="css/mobiriseicons.css">
+
+        <!-- Magnific-popup -->
+        <link rel="stylesheet" href="css/magnific-popup.css">
+
+        <!-- Animate Css -->
+        <link rel="stylesheet" href="css/animate.min.css">
+
+        <!-- Owl Slider -->
+        <link rel="stylesheet" href="css/owl.carousel.css" />
+        <link rel="stylesheet" href="css/owl.theme.css" />
+        <link rel="stylesheet" href="css/owl.transitions.css" />
+
+        <!-- Custom style Css -->
+        <link rel="stylesheet" href="css/style.css">
+
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -39,5 +62,31 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <!-- JAVASCRIPTS -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <!--EASING JS-->
+        <script src="js/jquery.easing.min.js"></script>
+        <script src="js/scrollspy.min.js"></script>
+        <!-- TYPED -->
+        <script src="js/typed.js"></script>         
+        <!-- MFP JS -->
+        <script src="js/jquery.magnific-popup.min.js"></script>
+        <!--PORTFOLIO FILTER JS-->
+        <script src="js/isotope.js"></script>        
+        <!-- OWL CAROUSEL -->
+        <script src="js/owl.carousel.min.js"></script>
+       
+        <script>
+            $(".element").each(function() {
+                var $this = $(this);
+                $this.typed({
+                    strings: $this.attr('data-elements').split(','),
+                    typeSpeed: 100,
+                    backDelay: 3000
+                });
+            });
+        </script>
   </body>
 </html>

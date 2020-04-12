@@ -1,0 +1,11 @@
+.modal-dialog{
+    max-width: 1200px;
+    margin: 1.75rem auto;
+    height: 400px;
+}
+.slideshow > .slideshow-wrapper > div > img{
+    height: 400px;
+}
+.slideshow > .slideshow-wrapper:nth-child(4){
+    height: 40px;
+}
