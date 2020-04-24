@@ -14,23 +14,41 @@ import Contact from '../Contact/Contact';
 import { createBrowserHistory } from "history";
 import BlogSingle from '../BlogSingle/BlogSingle';
 //import { Test } from './Main.styles';
-
+import ApiServices from '../../api_services/api_services';
 class Main extends PureComponent { 
   constructor(props) {
     super(props);
 
     this.state = {
       hasError: false,
+      website_logo:'',
+      footer_data:'',
+      social_icon:''
     };
 
     
   }
-  
+  webAllInfo(){
+    ApiServices.getWebsiteInfo().then((response)=>{
+      console.log(response);
+        if(response.data.success==true){
+           this.setState({
+            website_logo:response.data.data.website_logo,
+            footer_data:response.data.data.footer_data,
+            social_icon:response.data.data.social_icons
+        });
+        }
+    }).catch((error)=>{
+        console.log(error)
+    })
+}
+
   componentWillMount = () => {
     console.log('Main will mount');
   }
 
   componentDidMount = () => {
+    this.webAllInfo();
     console.log('Main mounted');
   }
 
@@ -57,7 +75,7 @@ class Main extends PureComponent {
     return (
       <React.Fragment>
         <Router>
-          <Header/>
+          <Header data={this.state.website_logo}/>
             <Switch>
               <Route exact path='/' component={Home}/>
               <Route path='/about' component={About} />

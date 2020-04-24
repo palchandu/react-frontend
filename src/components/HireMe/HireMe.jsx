@@ -18,7 +18,7 @@ const HireMe = (props) => (
                     </div>
                 </div>
             </div>
-        </section>
+    </section>
   </React.Fragment>
 );
 

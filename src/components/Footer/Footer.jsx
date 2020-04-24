@@ -16,7 +16,7 @@ const Footer = (props) => (
                                 <li className="list-inline-item"><a href="#" className="social-icon text-muted"><i className="mdi mdi-facebook"></i></a></li>
                                 <li className="list-inline-item"><a href="#" className="social-icon text-muted"><i className="mdi mdi-twitter"></i></a></li>
                                 <li className="list-inline-item"><a href="#" className="social-icon text-muted"><i className="mdi mdi-linkedin"></i></a></li>
-                                <li className="list-inline-item"><a href="#" className="social-icon text-muted"><i className="mdi mdi-google-plus"></i></a></li>
+                                <li className="list-inline-item"><a href="#" className="social-icon text-muted"><i className="mdi mdi-youtube-play"></i></a></li>
                             </ul>
                         </div>
                     </div>

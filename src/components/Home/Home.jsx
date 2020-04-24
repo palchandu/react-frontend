@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Typical from 'react-typical'
+import HireMe from '../HireMe';
 //import { Test } from './Home.styles';
 
 class Home extends PureComponent { 
@@ -52,16 +53,16 @@ class Home extends PureComponent {
                             <div className="col-lg-12">
                                 <div className="text-white text-center">
                                     <h4>Hello & Welcome</h4>
-                                    <h1 className="header_title mb-0 mt-3">I Am<Typical
-        steps={['C.P Pal',1500,'Developer', 1000, 'Designer', 500]}
-        loop={Infinity}
-        wrapper="p"
-      /></h1>
+                                    <h1 className="header_title mb-0 mt-3">I Am
+                                    <Typical
+                                    steps={['C.P Pal',1500,'Developer', 1000, 'Designer', 500]}
+                                    loop={Infinity}
+                                    wrapper="p"
+                                      /></h1>
                                     <ul className="social_home list-unstyled text-center pt-4">
                                         <li className="list-inline-item"><a href="#"><i className="mdi mdi-facebook"></i></a></li>
                                         <li className="list-inline-item"><a href="#"><i className="mdi mdi-linkedin"></i></a></li>
-                                        <li className="list-inline-item"><a href="#"><i className="mdi mdi-dribbble"></i></a></li>
-                                        <li className="list-inline-item"><a href="#"><i className="mdi mdi-google-plus"></i></a></li>
+                                        <li className="list-inline-item"><a href="#"><i className="mdi mdi-youtube-play"></i></a></li>
                                         <li className="list-inline-item"><a href="#"><i className="mdi mdi-twitter"></i></a></li>
                                     </ul>
                                     <div className="header_btn">
@@ -73,8 +74,8 @@ class Home extends PureComponent {
                     </div>
                 </div>
             </div>
-            
         </section>
+        <HireMe />
       </React.Fragment>
     );
   }

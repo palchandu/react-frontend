@@ -40,37 +40,43 @@ class Works extends PureComponent {
         'id':1,
         'slide_image':['images/works/2.jpg','images/works/3.jpg','images/works/4.jpg','images/works/5.jpg','images/works/6.jpg'],
         'bg_image':'images/works/1.jpg',
-        'project_name':'UI Elements, Icons'
+        'project_name':'UI Elements, Icons',
+        'project_url':'',
       },
       {
         'id':2,
         'slide_image':['images/works/2.jpg','images/works/3.jpg','images/works/4.jpg','images/works/5.jpg','images/works/6.jpg'],
         'bg_image':'images/works/2.jpg',
-        'project_name':'Illustrations'
+        'project_name':'Illustrations',
+        'project_url':'',
       },
       {
         'id':3,
         'slide_image':['images/works/2.jpg','images/works/3.jpg','images/works/4.jpg','images/works/5.jpg','images/works/6.jpg'],
         'bg_image':'images/works/3.jpg',
-        'project_name':'Media, Icons'
+        'project_name':'Media, Icons',
+        'project_url':'',
       },
       {
         'id':4,
         'slide_image':['images/works/2.jpg','images/works/3.jpg','images/works/4.jpg','images/works/5.jpg','images/works/6.jpg'],
         'bg_image':'images/works/4.jpg',
-        'project_name':'Graphics, UI Elements'
+        'project_name':'Graphics, UI Elements',
+        'project_url':'',
       },
       {
         'id':5,
         'slide_image':['images/works/2.jpg','images/works/3.jpg','images/works/4.jpg','images/works/5.jpg','images/works/6.jpg'],
         'bg_image':'images/works/5.jpg',
-        'project_name':'Illustrations, Graphics'
+        'project_name':'Illustrations, Graphics',
+        'project_url':'',
       },
       {
         'id':6,
         'slide_image':['images/works/2.jpg','images/works/3.jpg','images/works/4.jpg','images/works/5.jpg','images/works/6.jpg'],
         'bg_image':'images/works/6.jpg',
-        'project_name':'UI Elements, Icons'
+        'project_name':'UI Elements, Icons',
+        'project_url':'',
       }
     ]
     if (this.state.hasError) {

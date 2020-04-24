@@ -31,7 +31,7 @@ const Header = (props) => {
             <div className="container">
 
                 <NavLink className="navbar-brand logo" to='/'>
-                <img src="images/logo.png" alt="" className="img-fluid logo-light"/>
+                <img src={props.data} alt="" className="img-fluid logo-light"/>
 
                 </NavLink>
 
