@@ -72,7 +72,10 @@ class Main extends PureComponent {
     if (this.state.hasError) {
       return <h1>Something went wrong.</h1>;
     }
+    var datas={footer_content:this.state.footer_data,social_content:this.state.social_icon}
+    console.log('------',datas)
     return (
+      
       <React.Fragment>
         <Router>
           <Header data={this.state.website_logo}/>
@@ -87,7 +90,7 @@ class Main extends PureComponent {
               <Route path='/contact' component={Contact} />
               <Route path='/:title' component={BlogSingle} />
             </Switch>
-          <Footer/>
+          <Footer data={datas}/>
         </Router>
       </React.Fragment>
     );
