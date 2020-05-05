@@ -1,15 +1,69 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 //import { Test } from './Contact.styles';
-
+import { ValidatorForm } from 'react-form-validator-core';
+import TextValidator from '../../library/TextValidator';
+import TextAreaValidator from '../../library/TextAreaValidator';
+import Service from '../../api_services/api_services';
+import swal from 'sweetalert';
 class Contact extends PureComponent { 
   constructor(props) {
     super(props);
 
     this.state = {
       hasError: false,
+      name:'',
+      email:'',
+      subject:'',
+      message:'',
+      call_us:'',
+      email_us:'',
+      visit_us:''
     };
+    this.handleChange=this.handleChange.bind(this);
   }
+  handleChange(e){
+    this.setState({[e.target.name]:e.target.value});
+  }
+  addEnquiry(e){
+    e.preventDefault();
+    var data={
+        enquiry:{
+            name:this.state.name,
+            email:this.state.email,
+            subject:this.state.subject,
+            message:this.state.message
+        }
+    }
+    this.saveEnquiry(data);
+  }
+
+  saveEnquiry(data){
+    Service.addEnquiry(data).then((response)=>{
+        console.log(response);
+        if(response.data.success==true){
+            swal("Thank You!", response.data.message, "success");
+        }else{
+            swal("Thank You!", response.data.message, "success");
+        }
+    }).catch((error)=>{
+        swal("Error!", error, "error");
+    })
+  }
+  allInfo(){
+    Service.getContactDetails().then((response)=>{
+      console.log('99999999999999999999',response);
+        if(response.data.success==true){
+           this.setState({
+            call_us:response.data.data.call_us,
+            email_us:response.data.data.email_us,
+            visit_us:response.data.data.visit_us
+        });
+        }
+    }).catch((error)=>{
+        console.log(error)
+    })
+}
 
   componentWillMount = () => {
     console.log('Contact will mount');
@@ -17,6 +71,7 @@ class Contact extends PureComponent {
 
   componentDidMount = () => {
     console.log('Contact mounted');
+    this.allInfo();
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -61,7 +116,7 @@ class Contact extends PureComponent {
                             </div>
                             <div className="mt-2">
                                 <p className="mb-0 font-weight-bold">Call Us On</p>
-                                <p className="text-muted">+985 123 7856</p>
+                                <p className="text-muted">{this.state.call_us}</p>
                             </div>
                         </div>
                         <div className="text-center mt-4">
@@ -70,7 +125,7 @@ class Contact extends PureComponent {
                             </div>
                             <div className="mt-2">
                                 <p className="mb-0 font-weight-bold">Email Us At</p>
-                                <p className="text-muted">exmaple@gmail.com</p>
+                                <p className="text-muted">{this.state.email_us}</p>
                             </div>
                         </div>
                         <div className="text-center mt-4">
@@ -79,39 +134,64 @@ class Contact extends PureComponent {
                             </div>
                             <div className="mt-2">
                                 <p className="mb-0 font-weight-bold">Visit Office</p>
-                                <p className="text-muted">202, Grasselli Street , Conway.</p>
+                                <p className="text-muted">{this.state.visit_us}</p>
                             </div>
                         </div>
                     </div>
                     <div className="col-lg-8">
                         <div className="contact_form">
-                            <form>
+                            <ValidatorForm  ref="form" onSubmit={this.addEnquiry.bind(this)} >
                                 <div className="row">
-                                    <div className="col-lg-6">
-                                        <div className="form-group mt-2">
-                                            <label for="name" className="font-weight-bold">Name</label>
-                                            <input name="name" id="name" type="text" className="form-control" placeholder="Your name..." required=""/>
-                                        </div>
+                                    <div className="col-lg-6 form-group">
+                                    <label htmlFor="name" className="font-weight-bold">Name</label>
+                                        <TextValidator 
+                                            name="name"
+                                            onChange={this.handleChange}
+                                            value={this.state.name}
+                                            validators={['required','minStringLength:5']}
+                                            errorMessages={['this field is required', 'minimum length will be 5 character']}
+                                            className="form-control mt-2"
+                                            placeholder="Your name..."
+                                         />
                                     </div>
-                                    <div className="col-lg-6">
-                                        <div className="form-group mt-2">
-                                            <label for="email" className="font-weight-bold">Email address</label>
-                                            <input name="email" id="email" type="email" className="form-control" placeholder="Your email..."  required=""/>
-                                        </div>
+                                    <div className="col-lg-6 form-group">
+                                    <label htmlFor="email" className="font-weight-bold">Email address</label>
+                                    <TextValidator 
+                                            name="email"
+                                            onChange={this.handleChange}
+                                            value={this.state.email}
+                                            validators={['required','isEmail']}
+                                            errorMessages={['this field is required', 'email is not valid']}
+                                            className="form-control mt-2"
+                                            placeholder="Your email..."
+                                    />
                                     </div>
-                                    <div className="col-lg-12">
-                                        <div className="form-group mt-2">
-                                            <label for="subject" className="font-weight-bold">Subject</label>
-                                            <input type="text" className="form-control" id="subject" placeholder="Your Subject.."  required=""/>
-                                        </div>
+                                    <div className="col-lg-12 form-group">
+                                    <label htmlFor="subject" className="font-weight-bold">Subject</label>
+                                    <TextValidator 
+                                            name="subject"
+                                            onChange={this.handleChange}
+                                            value={this.state.subject}
+                                            validators={['required','minStringLength:10']}
+                                            errorMessages={['this field is required', 'minimum length will be 10 character']}
+                                            className="form-control mt-2"
+                                            placeholder="Your Subject.."
+                                    />
                                     </div>
                                 </div>
                                 <div className="row">
-                                    <div className="col-lg-12">
-                                        <div className="form-group mt-2">
-                                            <label for="comments" className="font-weight-bold">Message</label>
-                                            <textarea name="comments" id="comments" rows="4" className="form-control" placeholder="Your message..." required=""></textarea>
-                                        </div>
+                                    <div className="col-lg-12 form-group">
+                                        <label htmlFor="comments" className="font-weight-bold">Message</label>
+                                        <TextAreaValidator 
+                                            name="message"
+                                            onChange={this.handleChange}
+                                            value={this.state.message}
+                                            validators={['required','minStringLength:100']}
+                                            errorMessages={['this field is required', 'minimum length will be 100 character']}
+                                            className="form-control mt-2"
+                                            placeholder="Your Messages.."
+                                    />
+                                            
                                     </div>
                                 </div>
                                 <div className="row">
@@ -119,7 +199,7 @@ class Contact extends PureComponent {
                                         <input type="submit" className="btn btn-custom" value="Send Message"/>
                                     </div>
                                 </div>
-                            </form>
+                            </ValidatorForm>
                         </div> 
                     </div>
                 </div>                          

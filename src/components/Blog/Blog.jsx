@@ -2,14 +2,31 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 //import { Test } from './Blog.styles';
 import BlogListComponentTemplate from '../../re-usable-component/BlogListComponent/index';
+import Service from '../../api_services/api_services';
+import queryString from 'query-string';
+import SideBar from '../../re-usable-component/SidebarComponent/SidebarComponent';
 class Blog extends PureComponent { 
   constructor(props) {
     super(props);
 
     this.state = {
       hasError: false,
+      blogList:[]
     };
   }
+
+  allInfo(data){
+    Service.post_listing(data).then((response)=>{
+        if(response.data.success==true){
+           this.setState({
+            blogList:response.data.data,
+        });
+        }
+        console.log('090980909999',this.state.blogList);
+    }).catch((error)=>{
+        console.log(error)
+    })
+}
 
   componentWillMount = () => {
     console.log('Blog will mount');
@@ -17,6 +34,18 @@ class Blog extends PureComponent {
 
   componentDidMount = () => {
     console.log('Blog mounted');
+    var query={}
+    let params = queryString.parse(this.props.location.search);
+    if(params.q && params.q!=null){
+      var seacrh=params.q;
+      query.seacrh=seacrh;
+    }
+    if(params.category && params.category!=null){
+      let category=params.category;
+      query.category=category;
+    }
+    
+    this.allInfo(query);
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -36,64 +65,15 @@ class Blog extends PureComponent {
   }
 
   render () {
-      const blogList=[
-          {
-              "featured_image":"images/blog/blog-1.jpg",
-              "title":"There are many variations",
-              "created_date":"13 February 2018",
-              "created_by":"By Envato",
-              "short_text":"Sit sagittis vulputate laoreet sodales tortor nulla lobortis bibendum netus primis fames. Lobortis ultricies.",
-              "categories":"Lifestyle"
-          },
-          {
-            "featured_image":"images/blog/blog-1.jpg",
-            "title":"There are many variations",
-            "created_date":"13 February 2018",
-            "created_by":"By Envato",
-            "short_text":"Sit sagittis vulputate laoreet sodales tortor nulla lobortis bibendum netus primis fames. Lobortis ultricies.",
-            "categories":"Lifestyle"
-        },
-        {
-            "featured_image":"images/blog/blog-1.jpg",
-            "title":"There are many variations",
-            "created_date":"13 February 2018",
-            "created_by":"By Envato",
-            "short_text":"Sit sagittis vulputate laoreet sodales tortor nulla lobortis bibendum netus primis fames. Lobortis ultricies.",
-            "categories":"Lifestyle"
-        },
-        {
-            "featured_image":"images/blog/blog-1.jpg",
-            "title":"There are many variations",
-            "created_date":"13 February 2018",
-            "created_by":"By Envato",
-            "short_text":"Sit sagittis vulputate laoreet sodales tortor nulla lobortis bibendum netus primis fames. Lobortis ultricies.",
-            "categories":"Lifestyle"
-        },
-        {
-            "featured_image":"images/blog/blog-1.jpg",
-            "title":"There are many variations",
-            "created_date":"13 February 2018",
-            "created_by":"By Envato",
-            "short_text":"Sit sagittis vulputate laoreet sodales tortor nulla lobortis bibendum netus primis fames. Lobortis ultricies.",
-            "categories":"Lifestyle"
-        },
-        {
-            "featured_image":"images/blog/blog-1.jpg",
-            "title":"There are many variations",
-            "created_date":"13 February 2018",
-            "created_by":"By Envato",
-            "short_text":"Sit sagittis vulputate laoreet sodales tortor nulla lobortis bibendum netus primis fames. Lobortis ultricies.",
-            "categories":"Lifestyle"
-        }
-      ];
+
     if (this.state.hasError) {
       return <h1>Something went wrong.</h1>;
     }
     return (
       <React.Fragment>
-        <section className="section bg-light" id="blog">
+        <section className="section bg-light">
             <div className="container">
-                <div className="row justify-content-center">
+              <div className="row justify-content-center">
                     <div className="col-lg-12">
                         <div className="text-center mx-auto section-main-title">
                             <h2>Our <span className="font-weight-bold">Blog</span></h2>
@@ -104,10 +84,17 @@ class Blog extends PureComponent {
                         </div>
                     </div>
                 </div>
-                <div className="row mt-4 pt-4">
-                    {blogList.map(item=>
-                    <BlogListComponentTemplate data={item} />
-                    )}
+                <div className="row">
+                    <div className="col-lg-8">
+                        <div className="row">
+                          {this.state.blogList.map(item=>
+                            <BlogListComponentTemplate data={item} />
+                            )}
+                        </div>
+                    </div>
+                    <div className="col-lg-4">
+                        <SideBar />
+                    </div>
                 </div>
             </div>
         </section>
