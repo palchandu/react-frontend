@@ -30,7 +30,6 @@ class Main extends PureComponent {
   }
   webAllInfo(){
     ApiServices.getWebsiteInfo().then((response)=>{
-      console.log(response);
         if(response.data.success==true){
            this.setState({
             website_logo:response.data.data.website_logo,

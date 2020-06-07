@@ -5,11 +5,12 @@ import Modal from '../ModalComponent/index';
 import './style.css';
 
 const Portfolio = (props) => (
+
   <React.Fragment>
     <div className="col-lg-4 works">
         <div className="work_img_box rounded">
             {/* <a className="img-zoom" href="javascript::void(0)"></a> */}
-            <Modal images={props.data.slide_image} />
+            <Modal images={props.data.slide_image} desc={props.data.project_description} pname={props.data.project_name} purl={props.data.project_url} />
             <div key={props.data.id} className="work_images">
                 <img src={props.data.bg_image} alt="image" className="img-fluid mx-auto d-block"/>
                 <div className="work_overlay">

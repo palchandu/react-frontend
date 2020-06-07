@@ -12,10 +12,22 @@ class SidebarComponent extends PureComponent {
 
     this.state = {
       hasError: false,
-      latest_post:[]
+      latest_post:[],
+      category_list:[],
+      search:''
     };
+    this.handleChange=this.handleChange.bind(this);
+    this.handleSearch=this.handleSearch.bind(this);
   }
-
+  handleChange(e){
+    this.setState({[e.target.name]:e.target.value});
+  }
+  handleSearch(e){
+    //e.preventDefault();
+    console.log(this.state.search)
+    //return <Redirect to={"/blog?q="+this.state.search} />
+    window.location.href='/blog?q='+this.state.search;
+  }
   getLatestPost(){
     Service.post_latest().then((response)=>{
         if(response.data.success==true){
@@ -30,6 +42,20 @@ class SidebarComponent extends PureComponent {
         console.log(error)
     })
   }
+  getCategoryList(){
+    Service.category_list().then((response)=>{
+        if(response.data.success==true){
+           this.setState({
+            category_list:response.data.data,
+        });
+        }else{
+            this.setState({hasError:true});
+        }
+        console.log('category_list',this.state.category_list)
+    }).catch((error)=>{
+        console.log(error)
+    })
+  }
 
   componentWillMount = () => {
     console.log('SidebarComponent will mount');
@@ -38,6 +64,7 @@ class SidebarComponent extends PureComponent {
   componentDidMount = () => {
     console.log('SidebarComponent mounted');
     this.getLatestPost();
+    this.getCategoryList();
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -69,8 +96,8 @@ class SidebarComponent extends PureComponent {
                                     <div className="sidebar_widget_title font-weight-bold text-uppercase">Search</div>
                                     <img src="images/divider.html" alt="" className="d-block mt-2 mb-4"/>
                                     <form>
-                                        <input className="form-control" type="search" placeholder="Search..."/>
-                                        <button className="search_icon" type="submit">
+                                        <input defaultValue={this.state.search} className="form-control" onChange={this.handleChange} name="search" type="search" placeholder="Search..."/>
+                                        <button className="search_icon" onClick={this.handleSearch}  type="button">
                                             <span className="mdi mdi-magnify"></span>
                                         </button>
                                     </form>
@@ -81,10 +108,10 @@ class SidebarComponent extends PureComponent {
                                     <div className="sidebar_widget_title font-weight-bold text-uppercase">Categories</div>
                                     <img src="images/divider.html" alt="" className="d-block mt-2 mb-3"/>
                                     <ul className="list-unstyled widget_list">
-                                        <li><a href="#"><i className="mdi mdi-chevron-double-right"></i> Journey</a></li>
-                                        <li><a href="#"><i className="mdi mdi-chevron-double-right"></i> Photography</a></li>
-                                        <li><a href="#"><i className="mdi mdi-chevron-double-right"></i> Lifestyle</a></li>
-                                        <li><a href="#"><i className="mdi mdi-chevron-double-right"></i> Food & Drinks</a></li>
+                                      {this.state.category_list.length==0 && <li>No Categories</li>}
+                                      {this.state.category_list.map((item,id)=>(
+                                          <li key={id}><Link to={"/blog?category="+item.name}> <i className="mdi mdi-chevron-double-right"></i> {item.name}</Link><a href="#"></a></li>
+                                      ))}
                                     </ul>
                                 </div>
 
@@ -97,7 +124,7 @@ class SidebarComponent extends PureComponent {
                                         <li>No Recent Post</li>
                                         }
                                         {this.state.latest_post.map((item,id)=>(
-                                            <li className="clearfix">
+                                            <li key={id} className="clearfix">
                                             <div className="re_post_img">
                                                 <a href="#">
                                                     <img src={item.featured_image} alt="" className="img-fluid rounded"/>

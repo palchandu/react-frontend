@@ -54,10 +54,23 @@ class Blog extends PureComponent {
 
   componentWillUpdate = (nextProps, nextState) => {
     console.log('Blog will update', nextProps, nextState);
+    
   }
 
   componentDidUpdate = () => {
     console.log('Blog did update');
+    var query={}
+    let params = queryString.parse(this.props.location.search);
+    if(params.q && params.q!=null){
+      var seacrh=params.q;
+      query.seacrh=seacrh;
+    }
+    if(params.category && params.category!=null){
+      let category=params.category;
+      query.category=category;
+    }
+    
+    this.allInfo(query);
   }
 
   componentWillUnmount = () => {
@@ -87,9 +100,18 @@ class Blog extends PureComponent {
                 <div className="row">
                     <div className="col-lg-8">
                         <div className="row">
-                          {this.state.blogList.map(item=>
-                            <BlogListComponentTemplate data={item} />
-                            )}
+                          {this.state.blogList.length==0 && 
+                            <div  className="col-lg-12 mt-3">
+                              <div className="text-center rounded bg-white p-2">
+                                <div className="content_blog pt-3 pb-3">
+                                  <h3>No Post Found.</h3>
+                                </div>
+                              </div>
+                            </div>
+                          }
+                          {this.state.blogList.map((item,id)=>(
+                            <BlogListComponentTemplate key={id} data={item} />
+                            ))}
                         </div>
                     </div>
                     <div className="col-lg-4">

@@ -12,6 +12,7 @@ class MyLargeModal extends React.Component {
         this.handleHide = this.handleHide.bind(this);
         this.state = {
           show: false,
+          image_list:[]
         };
     }
 
@@ -22,7 +23,16 @@ class MyLargeModal extends React.Component {
     handleHide() {
       this.setState({ show: false });
     }
-
+    manageImages(){
+      var images=[];
+      this.props.images.map((item)=>{
+        images.push(item.image_url);
+      })
+      this.setState({image_list:images});
+    }
+    componentDidMount(){
+      this.manageImages();
+    }
     render() {
       return (
           <React.Fragment>
@@ -42,17 +52,23 @@ class MyLargeModal extends React.Component {
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <div className=" col-lg-12">
+              <div className="flex-container">
+              <div className=" col-lg-6">
               <SlideShow
                
-                images={this.props.images}
+                images={this.state.image_list}
                 withTimestamp={true}
                 pageWillUpdate={(index, image) => {
                   console.log(`Page Update! index: ${index}, image: ${image}`);
                 }}
               />
               </div>
-            
+              <div className="col-lg-6">
+              <h3>{this.props.pname}</h3>
+              <p>{this.props.desc}</p>
+                <p>Demo URL:  <a target="_blank" href={this.props.purl}>Demo</a></p>
+              </div>
+              </div>
         
             </Modal.Body>
             <Modal.Footer>

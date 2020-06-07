@@ -9,3 +9,7 @@
 .slideshow > .slideshow-wrapper:nth-child(4){
     height: 40px;
 }
+.flex-container {
+    display: flex;
+    flex-wrap: nowrap;
+  }

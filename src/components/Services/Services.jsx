@@ -2,14 +2,33 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 //import { Test } from './Services.styles';
 import ServiceTemplate from '../../re-usable-component/ServiceComponent/index'
+import ApiServices from '../../api_services/api_services';
 class Services extends PureComponent { 
   constructor(props) {
     super(props);
 
     this.state = {
       hasError: false,
+      service_list:[],
+      service_title:'',
+      service_intro:''
     };
   }
+
+  webAllInfo(){
+    ApiServices.getWebsiteInfo().then((response)=>{
+        if(response.data.success==true){
+           this.setState({
+            service_list:response.data.data.service.service_set,
+            service_title:response.data.data.service.service_title,
+            service_intro:response.data.data.service.service_intro
+        });
+        }
+        console.log('ddddddd',this.state.work_list);
+    }).catch((error)=>{
+        console.log(error)
+    })
+}
 
   componentWillMount = () => {
     console.log('Services will mount');
@@ -17,6 +36,7 @@ class Services extends PureComponent {
 
   componentDidMount = () => {
     console.log('Services mounted');
+    this.webAllInfo();
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -36,44 +56,7 @@ class Services extends PureComponent {
   }
 
   render () {
-      const service_list=[
-          {
-              'icon_class':'mbri-database',
-              'service_name':'Graphic Design',
-              'about_service':'The standard chunk of Lorem Ipsum used since the is reproduced below for those interested.'
-
-          },
-          {
-            'icon_class':'mbri-website-theme',
-            'service_name':'Unlimited Color',
-            'about_service':'The standard chunk of Lorem Ipsum used since the is reproduced below for those interested.'
-
-        },
-        {
-            'icon_class':'mbri-growing-chart',
-            'service_name':'Media Marketing',
-            'about_service':'The standard chunk of Lorem Ipsum used since the is reproduced below for those interested.'
-
-        },
-        {
-            'icon_class':'mbri-wifi',
-            'service_name':'Unlimited Wifi',
-            'about_service':'The standard chunk of Lorem Ipsum used since the is reproduced below for those interested.'
-
-        },
-        {
-            'icon_class':'mbri-responsive',
-            'service_name':'Responsive Design',
-            'about_service':'The standard chunk of Lorem Ipsum used since the is reproduced below for those interested.'
-
-        },
-        {
-            'icon_class':'mbri-edit',
-            'service_name':'Easy to customize',
-            'about_service':'The standard chunk of Lorem Ipsum used since the is reproduced below for those interested.'
-
-        }
-      ]
+ 
     if (this.state.hasError) {
       return <h1>Something went wrong.</h1>;
     }
@@ -84,16 +67,16 @@ class Services extends PureComponent {
                 <div className="row justify-content-center">
                     <div className="col-lg-12">
                         <div className="text-center mx-auto section-main-title">
-                            <h2>Our <span className="font-weight-bold">Services</span></h2>
+                            <h2><span className="font-weight-bold">{this.state.service_title}</span></h2>
                             <div className="main-title-border">
                                 <i className="mdi mdi-asterisk"></i>
                             </div>
-                            <p className="text-muted mx-auto mt-2">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+                            <p className="text-muted mx-auto mt-2">{this.state.service_intro}</p>
                         </div>
                     </div>
                 </div>
                 <div className="row mt-4 pt-4">
-                   {service_list.map(item=>
+                   {this.state.service_list.map(item=>
                        <ServiceTemplate data={item} />
                    )}
                 </div>

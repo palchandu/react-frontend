@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 //import { Test } from './HireMe.styles';
-
+import './style.css'
 const HireMe = (props) => (
   <React.Fragment>
-    <section className="section bg-cta">
+    <section className="section bg-cta clip-hire">
             <div className="bg-overlay"></div>
             <div className="container">
                 <div className="row">

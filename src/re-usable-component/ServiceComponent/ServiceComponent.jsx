@@ -7,7 +7,7 @@ const ServiceComponent = (props) => (
     <div className="col-lg-4">
       <div className="lan_box_ser text-center rounded p-4 mt-3">
           <div className="ser_icon">
-              <i className={props.data.icon_class}></i>
+              <img style={{"width": "100px","height": "auto"}} src={props.data.service_icon} />
           </div>
           <div className="service-content mt-4">
               <h5 className="font-weight-bold">{props.data.service_name}</h5>

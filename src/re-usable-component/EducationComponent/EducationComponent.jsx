@@ -7,9 +7,9 @@ const EducationComponent = (props) => (
     <div class="cv_edu_exp_box mt-4">
         <div class="row">
             <div class="col-lg-12">
-              <div class="cv_edu_exp_year font-weight-bold text-custom position-relative">{props.data.year}</div>
+              <div class="cv_edu_exp_year font-weight-bold text-custom position-relative">{props.data.year_between}</div>
                 <div class="cb_edu_exp_detail">
-                    <h4>{props.data.institute}</h4>
+                    <h4>{props.data.institute_name}</h4>
                     <p class="cv_desc mb-0">{props.data.about_education}</p>
                 </div>
             </div>

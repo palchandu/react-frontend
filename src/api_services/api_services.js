@@ -69,11 +69,21 @@ function post_latest(){
         })
     })
 }
+function category_list(){
+    return new Promise((resolve,reject)=>{
+        axios.get(config.api_path+'/v2/category/list_category',{headers:headers}).then((response)=>{
+            resolve(response);
+        }).catch((error)=>{
+            reject(error)
+        })
+    })
+}
 export default {
     getWebsiteInfo,
     getContactDetails,
     addEnquiry,
     post_listing,
     post_single,
-    post_latest
+    post_latest,
+    category_list
 }
