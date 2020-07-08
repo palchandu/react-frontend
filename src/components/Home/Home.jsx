@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Typical from 'react-typical'
 import HireMe from '../HireMe';
+import Loader from '../Loader';
 //import { Test } from './Home.styles';
 import ApiServices from '../../api_services/api_services';
 class Home extends PureComponent { 
@@ -17,7 +18,8 @@ class Home extends PureComponent {
       facebook:'',
       linkedin:'',
       twitter:'',
-      youtube:''
+      youtube:'',
+      isLoading: true
     };
   }
   webAllInfo(){
@@ -36,6 +38,7 @@ class Home extends PureComponent {
             linkedin:response.data.data.social_icons.linkedin,
             twitter:response.data.data.social_icons.twitter,
             youtube:response.data.data.social_icons.youtube,
+            isLoading:false
         });
         }
         console.log('ddddddd',this.state.work_list);
@@ -50,6 +53,7 @@ class Home extends PureComponent {
 
   componentDidMount = () => {
     this.webAllInfo();
+   // this.setState({isLoading: false});
     console.log('Home mounted');
   }
 
@@ -80,7 +84,14 @@ class Home extends PureComponent {
       position: "relative"
 
   }
+
+  if(this.state.isLoading){
+    return(
+      <Loader/>
+    )
+  }else{
     return (
+      
       <React.Fragment>
         <section className="home-bg section h-100vh clip-home" id="home" style={divStyle}>
             <div className="bg-overlay"></div>
@@ -115,8 +126,9 @@ class Home extends PureComponent {
         </section>
         <HireMe />
       </React.Fragment>
-    );
-  }
+     );
+   }
+ }
 }
 
 Home.propTypes = {

@@ -8,7 +8,8 @@ import moment from 'moment'
 import { Redirect, Link } from 'react-router-dom';
 import Disqus from "disqus-react"
 import SidebarComponent from '../../re-usable-component/SidebarComponent/SidebarComponent';
-
+//Loader import
+import Loader from '../Loader';
 class BlogSingle extends PureComponent { 
   constructor(props) {
     super(props);
@@ -22,6 +23,7 @@ class BlogSingle extends PureComponent {
       url: '',
       identifier: '', 
       title: '' },
+      isLoading: true
       
     }
     
@@ -36,9 +38,10 @@ class BlogSingle extends PureComponent {
             created:response.data.data.meta_data.created,
             disqusShortname:'getwebsoftware',
             disqusConfig:{
-                url: 'http://localhost:3000',
+                url: 'http://www.gotwebsoftware.com/',
                 identifier: response.data.data._id, 
-                title: response.data.data.title}
+                title: response.data.data.title},
+                isLoading:false
         });
         }else{
             this.setState({hasError:true});
@@ -82,7 +85,11 @@ class BlogSingle extends PureComponent {
     if (this.state.hasError) {
       return <Redirect to="/blog" />
     }
-  
+    if(this.state.isLoading){
+      return(
+        <Loader />
+      )
+    }else{
     return (
     <React.Fragment>
       <section className="section bg-light">
@@ -125,6 +132,7 @@ class BlogSingle extends PureComponent {
     </React.Fragment>
     );
   }
+ }
 }
 
 BlogSingle.propTypes = {

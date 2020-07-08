@@ -5,13 +5,16 @@ import BlogListComponentTemplate from '../../re-usable-component/BlogListCompone
 import Service from '../../api_services/api_services';
 import queryString from 'query-string';
 import SideBar from '../../re-usable-component/SidebarComponent/SidebarComponent';
+//Loader import
+import Loader from '../Loader';
 class Blog extends PureComponent { 
   constructor(props) {
     super(props);
 
     this.state = {
       hasError: false,
-      blogList:[]
+      blogList:[],
+      isLoading: true
     };
   }
 
@@ -20,6 +23,7 @@ class Blog extends PureComponent {
         if(response.data.success==true){
            this.setState({
             blogList:response.data.data,
+            isLoading:false
         });
         }
         console.log('090980909999',this.state.blogList);
@@ -82,6 +86,11 @@ class Blog extends PureComponent {
     if (this.state.hasError) {
       return <h1>Something went wrong.</h1>;
     }
+    if(this.state.isLoading){
+      return(
+        <Loader />
+      )
+    }else{
     return (
       <React.Fragment>
         <section className="section bg-light">
@@ -122,7 +131,8 @@ class Blog extends PureComponent {
         </section>
       </React.Fragment>
     );
-  }
+   }
+ }
 }
 
 Blog.propTypes = {

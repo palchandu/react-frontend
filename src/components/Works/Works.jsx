@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 //import { Test } from './Works.styles';
 import PortfolioTemplate from '../../re-usable-component/Portfolio/index';
 import ApiServices from '../../api_services/api_services';
+//Loader import
+import Loader from '../Loader';
+
 class Works extends PureComponent { 
   constructor(props) {
     super(props);
@@ -11,7 +14,8 @@ class Works extends PureComponent {
       hasError: false,
       work_list:[],
       portfolio_data_title:'',
-      portfolio_data_intro:''
+      portfolio_data_intro:'',
+      isLoading: true
     };
   }
   webAllInfo(){
@@ -20,7 +24,8 @@ class Works extends PureComponent {
            this.setState({
             work_list:response.data.data.work.works_set,
             portfolio_data_title:response.data.data.work.portfolio_data_title,
-            portfolio_data_intro:response.data.data.work.portfolio_data_intro
+            portfolio_data_intro:response.data.data.work.portfolio_data_intro,
+            isLoading:false
         });
         }
         console.log('ddddddd',this.state.work_list);
@@ -59,6 +64,11 @@ class Works extends PureComponent {
     if (this.state.hasError) {
       return <h1>Something went wrong.</h1>;
     }
+    if(this.state.isLoading){
+      return(
+        <Loader />
+      )
+    }else{
     return (
       <React.Fragment>
         <section className="section text-center" id="work">
@@ -86,6 +96,7 @@ class Works extends PureComponent {
       </React.Fragment>
     );
   }
+ }
 }
 
 Works.propTypes = {

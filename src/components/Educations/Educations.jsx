@@ -6,6 +6,8 @@ import ExperianceTemplate from '../../re-usable-component/ExperienceComponent/in
 import HireMe from '../HireMe/index';
 //import { Test } from './Educations.styles';
 import ApiServices from '../../api_services/api_services';
+//Loader import
+import Loader from '../Loader';
 class Educations extends PureComponent {
   constructor(props) {
     super(props);
@@ -15,7 +17,8 @@ class Educations extends PureComponent {
       education_list:[],
       experience_list:[],
       title:'',
-      intro:''
+      intro:'',
+      isLoading: true
     };
   }
 
@@ -26,7 +29,8 @@ class Educations extends PureComponent {
             title:response.data.data.education_experience.education_service_title,
             intro:response.data.data.education_experience.education_service_intro,
             education_list:response.data.data.education_experience.education_set,
-            experience_list:response.data.data.education_experience.experience_set
+            experience_list:response.data.data.education_experience.experience_set,
+            isLoading:false
         });
         }
     }).catch((error)=>{
@@ -63,6 +67,12 @@ class Educations extends PureComponent {
     if (this.state.hasError) {
       return <h1>Something went wrong.</h1>;
     }
+
+    if(this.state.isLoading){
+      return(
+        <Loader />
+      )
+    }else{
     return (
       <React.Fragment>
         <section className="section" id="education">
@@ -102,7 +112,8 @@ class Educations extends PureComponent {
 
       </React.Fragment>
     );
-  }
+   }
+ }
 }
 
 Educations.propTypes = {

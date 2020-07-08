@@ -6,6 +6,8 @@ import TextValidator from '../../library/TextValidator';
 import TextAreaValidator from '../../library/TextAreaValidator';
 import Service from '../../api_services/api_services';
 import swal from 'sweetalert';
+//Loader import
+import Loader from '../Loader';
 class Contact extends PureComponent { 
   constructor(props) {
     super(props);
@@ -18,7 +20,8 @@ class Contact extends PureComponent {
       message:'',
       call_us:'',
       email_us:'',
-      visit_us:''
+      visit_us:'',
+      isLoading: true
     };
     this.handleChange=this.handleChange.bind(this);
   }
@@ -57,7 +60,8 @@ class Contact extends PureComponent {
            this.setState({
             call_us:response.data.data.call_us,
             email_us:response.data.data.email_us,
-            visit_us:response.data.data.visit_us
+            visit_us:response.data.data.visit_us,
+            isLoading:false
         });
         }
     }).catch((error)=>{
@@ -94,6 +98,11 @@ class Contact extends PureComponent {
     if (this.state.hasError) {
       return <h1>Something went wrong.</h1>;
     }
+    if(this.state.isLoading){
+      return(
+        <Loader />
+      )
+    }else{
     return (
       <React.Fragment>
         <section className="section " id="contact">
@@ -208,6 +217,7 @@ class Contact extends PureComponent {
       </React.Fragment>
     );
   }
+ }
 }
 
 Contact.propTypes = {

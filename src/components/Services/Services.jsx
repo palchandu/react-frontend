@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 //import { Test } from './Services.styles';
 import ServiceTemplate from '../../re-usable-component/ServiceComponent/index'
 import ApiServices from '../../api_services/api_services';
+//Loader import
+import Loader from '../Loader';
 class Services extends PureComponent { 
   constructor(props) {
     super(props);
@@ -11,7 +13,8 @@ class Services extends PureComponent {
       hasError: false,
       service_list:[],
       service_title:'',
-      service_intro:''
+      service_intro:'',
+      isLoading: true
     };
   }
 
@@ -21,7 +24,8 @@ class Services extends PureComponent {
            this.setState({
             service_list:response.data.data.service.service_set,
             service_title:response.data.data.service.service_title,
-            service_intro:response.data.data.service.service_intro
+            service_intro:response.data.data.service.service_intro,
+            isLoading:false
         });
         }
         console.log('ddddddd',this.state.work_list);
@@ -60,6 +64,11 @@ class Services extends PureComponent {
     if (this.state.hasError) {
       return <h1>Something went wrong.</h1>;
     }
+    if(this.state.isLoading){
+      return(
+        <Loader />
+      )
+    }else{
     return (
       <React.Fragment>
         <section className="section bg-light" id="services">
@@ -87,6 +96,7 @@ class Services extends PureComponent {
       </React.Fragment>
     );
   }
+ }
 }
 
 Services.propTypes = {

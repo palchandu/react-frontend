@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 //import { Test } from './Client.styles';
+//Loader import
+import Loader from '../Loader';
 
 class Client extends PureComponent { 
   constructor(props) {
@@ -8,6 +10,7 @@ class Client extends PureComponent {
 
     this.state = {
       hasError: false,
+      isLoading: true
     };
   }
 
@@ -17,6 +20,9 @@ class Client extends PureComponent {
 
   componentDidMount = () => {
     console.log('Client mounted');
+    this.setState({
+        isLoading:false
+    })
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -39,6 +45,11 @@ class Client extends PureComponent {
     if (this.state.hasError) {
       return <h1>Something went wrong.</h1>;
     }
+    if(this.state.isLoading){
+        return(
+          <Loader />
+        )
+      }else{
     return (
       <React.Fragment>
         <section className="section bg-client" id="client">
@@ -169,7 +180,8 @@ class Client extends PureComponent {
         </section>
       </React.Fragment>
     );
-  }
+   }
+ }
 }
 
 Client.propTypes = {

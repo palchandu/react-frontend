@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 //import { Test } from './About.styles';
 import ApiServices from '../../api_services/api_services';
+//Loader import
+import Loader from '../Loader';
 
 class About extends PureComponent {
   constructor(props) {
@@ -12,7 +14,8 @@ class About extends PureComponent {
       about_title:'',
       about_intro:'',
       about_details:'',
-      skills_percent:[]
+      skills_percent:[],
+      isLoading: true
     };
   }
 
@@ -23,7 +26,8 @@ class About extends PureComponent {
             skills_percent:response.data.data.about.skills_percent,
             about_details:response.data.data.about.about_details,
             about_intro:response.data.data.about.about_intro,
-            about_title:response.data.data.about.about_title
+            about_title:response.data.data.about.about_title,
+            isLoading:false
         });
         }
         console.log('ddddddd',this.state.work_list);
@@ -39,6 +43,7 @@ class About extends PureComponent {
 
   componentDidMount = () => {
     this.webAllInfo();
+    this.setState({isLoading: false});
     console.log('About mounted');
   }
 
@@ -62,6 +67,11 @@ class About extends PureComponent {
     if (this.state.hasError) {
       return <h1>Something went wrong.</h1>;
     }
+    if(this.state.isLoading){
+      return(
+        <Loader />
+      )
+    }else{
     return (
       <React.Fragment>
         <section className="section" id="about">
@@ -111,7 +121,8 @@ class About extends PureComponent {
         </section>
       </React.Fragment>
     );
-  }
+   }
+ }
 }
 
 About.propTypes = {
