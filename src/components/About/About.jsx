@@ -43,7 +43,6 @@ class About extends PureComponent {
 
   componentDidMount = () => {
     this.webAllInfo();
-    this.setState({isLoading: false});
     console.log('About mounted');
   }
 
